@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, within } from '@testing-library/react';
+import Footer from './components/Footer';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders footer branding', () => {
+  render(<Footer />);
+  const footer = screen.getByRole('contentinfo');
+  expect(within(footer).getAllByText(/Vraj Hirapara/).length).toBeGreaterThanOrEqual(1);
+  expect(screen.getByText(/Built with Flutter... I mean React/)).toBeInTheDocument();
 });
