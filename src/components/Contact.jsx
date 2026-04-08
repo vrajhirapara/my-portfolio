@@ -52,7 +52,19 @@ export default function Contact() {
     setSendError('');
     setSent(false);
 
-    const accessKey = resolveWeb3FormsKey(fetchedAccessKey);
+    let accessKey = resolveWeb3FormsKey(fetchedAccessKey);
+    if (!accessKey) {
+      try {
+        const res = await fetch(`${import.meta.env.BASE_URL}site-config.json`);
+        if (res.ok) {
+          const json = await res.json();
+          const k = typeof json?.web3formsAccessKey === 'string' ? json.web3formsAccessKey.trim() : '';
+          if (k) accessKey = k;
+        }
+      } catch {
+        /* ignore */
+      }
+    }
     if (!accessKey) {
       setSendError(
         import.meta.env.DEV
