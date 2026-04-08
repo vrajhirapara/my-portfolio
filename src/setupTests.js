@@ -1,9 +1,6 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import React from 'react';
+import { vi } from 'vitest';
 
 const mockCtx = {
   createRadialGradient: () => ({ addColorStop: () => {} }),
@@ -15,29 +12,23 @@ const mockCtx = {
   fill: () => {},
 };
 // jsdom has no canvas 2d context
-// eslint-disable-next-line no-undef
-HTMLCanvasElement.prototype.getContext = jest.fn(() => mockCtx);
+HTMLCanvasElement.prototype.getContext = vi.fn(() => mockCtx);
 
 window.matchMedia =
   window.matchMedia ||
-  jest.fn().mockImplementation((query) => ({
+  vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   }));
 
-jest.mock('react-tilt', () => ({
-  Tilt: function MockTilt({ children, className, options: _o, ...rest }) {
-    return (
-      <div className={className} {...rest}>
-        {children}
-      </div>
-    );
+vi.mock('react-parallax-tilt', () => ({
+  default: function MockTilt({ children, className, ...rest }) {
+    return React.createElement('div', { className, ...rest }, children);
   },
 }));
-

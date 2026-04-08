@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Element } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Tilt } from 'react-tilt';
+import Tilt from 'react-parallax-tilt';
 import {
   ExternalLink,
   Landmark,
@@ -175,7 +175,13 @@ export default function Projects() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.2 }}
                   >
-                    <Tilt options={{ max: 12, scale: 1.02, speed: 400 }} className="h-full">
+                    <Tilt
+                      tiltMaxAngleX={12}
+                      tiltMaxAngleY={12}
+                      scale={1.02}
+                      transitionSpeed={400}
+                      className="h-full"
+                    >
                       <motion.article
                         className="group relative h-full overflow-hidden rounded-3xl border border-[var(--glass-border)] bg-[var(--bg-secondary)]/80 shadow-xl backdrop-blur-md transition-shadow duration-300 hover:border-[var(--neon-blue)]/40 hover:shadow-[0_0_32px_rgba(0,200,240,0.08)]"
                         whileHover={{ y: -6 }}

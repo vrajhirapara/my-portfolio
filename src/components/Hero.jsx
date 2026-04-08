@@ -7,7 +7,7 @@ import { IconGithub, IconLinkedin } from './SocialBrandIcons';
 import { Link } from 'react-scroll';
 import { gmailComposeUrl } from '../utils/gmailCompose';
 
-const FLUTTER_LOGO_HERO_SRC = `${process.env.PUBLIC_URL || ''}/flutter-logo-hero.png`;
+const FLUTTER_LOGO_HERO_SRC = `${import.meta.env.BASE_URL}flutter-logo-hero.png`;
 
 const titleWords = 'Flutter & FlutterFlow That Ships'.split(' ');
 

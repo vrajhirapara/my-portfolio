@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 
-const LOGO_SRC = `${process.env.PUBLIC_URL || ''}/loading-brand-logo.png`;
+const LOGO_SRC = `${import.meta.env.BASE_URL}loading-brand-logo.png`;
 
 export default function LoadingScreen({ show, onDone }) {
   return (

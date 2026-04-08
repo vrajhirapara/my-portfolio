@@ -17,7 +17,7 @@ export default function Footer() {
             <span className="text-[var(--text-primary)]">Vraj Hirapara</span>
           </p>
           <p className="mt-2 max-w-xs font-sora text-sm text-[var(--text-secondary)]">
-            Flutter &amp; FlutterFlow · Surat, Gujarat · Cross-platform apps with polish.
+            Flutter &amp; FlutterFlow · India · Cross-platform apps with polish.
           </p>
         </div>
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label="Footer">

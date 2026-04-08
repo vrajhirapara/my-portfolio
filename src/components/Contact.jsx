@@ -8,7 +8,7 @@ import { gmailComposeUrl } from '../utils/gmailCompose';
 const email = 'vrajmhirapara3@gmail.com';
 
 function getWeb3FormsKey() {
-  return (process.env.REACT_APP_WEB3FORMS_ACCESS_KEY || '').trim();
+  return (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '').trim();
 }
 
 export default function Contact() {
@@ -36,7 +36,7 @@ export default function Contact() {
     const accessKey = getWeb3FormsKey();
     if (!accessKey) {
       setSendError(
-        'Contact form is not configured. Add REACT_APP_WEB3FORMS_ACCESS_KEY to .env.local in the project root (same folder as package.json), then stop and restart npm start. For a live site, add the same variable in your host’s settings and rebuild.'
+        'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY to .env.local in the project root (same folder as package.json), then stop and restart the dev server. For a live site, add the same variable in your host’s settings and rebuild.'
       );
       return;
     }
