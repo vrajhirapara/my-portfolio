@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Element } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Copy, Check } from 'lucide-react';
@@ -7,12 +7,12 @@ import { gmailComposeUrl } from '../utils/gmailCompose';
 
 const email = 'vrajmhirapara3@gmail.com';
 
-function getWeb3FormsKey() {
-  const key =
-    import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ||
-    import.meta.env.REACT_APP_WEB3FORMS_ACCESS_KEY ||
-    '';
-  return String(key).trim();
+function resolveWeb3FormsKey(fetchedFromPublicJson) {
+  return (
+    String(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '').trim() ||
+    String(import.meta.env.REACT_APP_WEB3FORMS_ACCESS_KEY || '').trim() ||
+    String(fetchedFromPublicJson || '').trim()
+  );
 }
 
 export default function Contact() {
@@ -21,6 +21,21 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [sendError, setSendError] = useState('');
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [fetchedAccessKey, setFetchedAccessKey] = useState('');
+
+  useEffect(() => {
+    const ac = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}site-config.json`, { signal: ac.signal })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && typeof json.web3formsAccessKey === 'string') {
+          const k = json.web3formsAccessKey.trim();
+          if (k) setFetchedAccessKey(k);
+        }
+      })
+      .catch(() => {});
+    return () => ac.abort();
+  }, []);
 
   const copyEmail = async () => {
     try {
@@ -37,10 +52,12 @@ export default function Contact() {
     setSendError('');
     setSent(false);
 
-    const accessKey = getWeb3FormsKey();
+    const accessKey = resolveWeb3FormsKey(fetchedAccessKey);
     if (!accessKey) {
       setSendError(
-        'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY (or REACT_APP_WEB3FORMS_ACCESS_KEY from an older setup) to .env.local next to package.json, then restart the dev server. For production, set the same variable on your host and rebuild.'
+        import.meta.env.DEV
+          ? 'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY to .env.local and restart the dev server, or copy public/site-config.example.json to public/site-config.json with your Web3Forms key. For production, set that env var in your host build settings and redeploy, or ship site-config.json in public/ before building.'
+          : 'This form is not enabled on this deployment. Please use the email link on the left to get in touch.'
       );
       return;
     }

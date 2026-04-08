@@ -19,6 +19,11 @@
 .env.test.local
 .env.production.local
 
+# Optional Web3Forms key for static hosts (copy from site-config.example.json)
+/public/site-config.json
+
+/dist
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
