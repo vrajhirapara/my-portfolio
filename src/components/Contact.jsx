@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Copy, Check } from 'lucide-react';
 import { IconLinkedin } from './SocialBrandIcons';
 import { gmailComposeUrl } from '../utils/gmailCompose';
+import web3formsDefaults from '../config/web3forms.json';
 
 const email = 'vrajmhirapara3@gmail.com';
 
@@ -11,6 +12,7 @@ function resolveWeb3FormsKey(fetchedFromPublicJson) {
   return (
     String(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '').trim() ||
     String(import.meta.env.REACT_APP_WEB3FORMS_ACCESS_KEY || '').trim() ||
+    String(web3formsDefaults.web3formsAccessKey || '').trim() ||
     String(fetchedFromPublicJson || '').trim()
   );
 }
@@ -68,7 +70,7 @@ export default function Contact() {
     if (!accessKey) {
       setSendError(
         import.meta.env.DEV
-          ? 'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY to .env.local and restart the dev server, or copy public/site-config.example.json to public/site-config.json with your Web3Forms key. For production, set that env var in your host build settings and redeploy, or ship site-config.json in public/ before building.'
+          ? 'Contact form is not configured. Set web3formsAccessKey in src/config/web3forms.json, or add VITE_WEB3FORMS_ACCESS_KEY to .env.local and restart the dev server.'
           : 'This form is not enabled on this deployment. Please use the email link on the left to get in touch.'
       );
       return;
