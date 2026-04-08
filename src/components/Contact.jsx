@@ -8,7 +8,11 @@ import { gmailComposeUrl } from '../utils/gmailCompose';
 const email = 'vrajmhirapara3@gmail.com';
 
 function getWeb3FormsKey() {
-  return (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '').trim();
+  const key =
+    import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ||
+    import.meta.env.REACT_APP_WEB3FORMS_ACCESS_KEY ||
+    '';
+  return String(key).trim();
 }
 
 export default function Contact() {
