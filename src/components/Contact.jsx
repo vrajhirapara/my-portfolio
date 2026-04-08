@@ -36,7 +36,7 @@ export default function Contact() {
     const accessKey = getWeb3FormsKey();
     if (!accessKey) {
       setSendError(
-        'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY to .env.local in the project root (same folder as package.json), then stop and restart the dev server. For a live site, add the same variable in your host’s settings and rebuild.'
+        'Contact form is not configured. Add VITE_WEB3FORMS_ACCESS_KEY (or REACT_APP_WEB3FORMS_ACCESS_KEY from an older setup) to .env.local next to package.json, then restart the dev server. For production, set the same variable on your host and rebuild.'
       );
       return;
     }
